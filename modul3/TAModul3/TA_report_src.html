@@ -1,0 +1,498 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=unicode">
+<meta name="ProgId" content="Word.Document">
+<meta name="Generator" content="Microsoft Word 15">
+<meta name="Originator" content="Microsoft Word 15">
+<title>Laporan Praktikum Modul 3 - Blade Template Laravel</title>
+<!--[if gte mso 9]><xml>
+<w:WordDocument>
+<w:View>Print</w:View>
+<w:Zoom>100</w:Zoom>
+</w:WordDocument>
+</xml><![endif]-->
+<style>
+@page { size: A4; margin: 2.5cm 2.5cm 2.5cm 2.5cm; }
+body { font-family: 'Times New Roman', Times, serif; font-size: 12pt; line-height: 1.5; color: #000; }
+h1 { font-size: 20pt; text-align: center; margin: 0 0 4pt; }
+h2 { font-size: 14pt; border-bottom: 1.5pt solid #1565c0; padding-bottom: 4pt; color: #0d47a1; margin-top: 22pt; }
+h3 { font-size: 12pt; color: #1565c0; margin-bottom: 4pt; margin-top: 16pt; }
+p { margin: 6pt 0; text-align: justify; }
+ul, ol { margin: 6pt 0 6pt 18pt; }
+li { margin-bottom: 3pt; text-align: justify; }
+pre.code { font-family: Consolas, 'Courier New', monospace; font-size: 9pt; background: #f6f8fa; border: 1pt solid #d0d7de; border-radius: 5pt; padding: 8pt 10pt; white-space: pre-wrap; line-height: 1.35; margin: 6pt 0; color: #1f2328; }
+.cover { text-align: center; }
+.cover .modul { font-size: 26pt; font-weight: bold; letter-spacing: 1pt; margin-top: 0; }
+.cover .sub { font-size: 18pt; font-weight: bold; color: #0d47a1; margin-top: 0; }
+.cover .logo { width: 205pt; margin: 26pt auto 22pt; display: block; }
+.cover .label { font-size: 12pt; margin: 0; }
+.cover .nama { font-size: 15pt; font-weight: bold; margin: 2pt 0; }
+.cover .info { font-size: 12pt; margin: 2pt 0; }
+.cover .block { margin-top: 20pt; }
+hr { border: none; border-top: 1pt solid #999; margin: 14pt 0; }
+figure { margin: 12pt 0; text-align: center; page-break-inside: avoid; }
+figure img { border: 1pt solid #bbb; max-width: 100%; }
+figcaption { font-size: 10pt; font-style: italic; color: #333; margin-top: 4pt; }
+.caption-title { font-size: 10.5pt; font-weight: bold; text-align: center; margin: 10pt 0 2pt; }
+.note { background: #e3f2fd; border-left: 4pt solid #1565c0; padding: 6pt 10pt; margin: 8pt 0; font-size: 11pt; }
+.table-basic { border-collapse: collapse; width: 100%; margin: 8pt 0; font-size: 11pt; }
+.table-basic th, .table-basic td { border: 1pt solid #999; padding: 4pt 8pt; text-align: left; }
+.table-basic th { background: #e3f2fd; }
+</style>
+</head>
+<body>
+
+<!-- ================= HALAMAN SAMPUL ================= -->
+<div class="cover">
+    <p class="modul">MODUL 3</p>
+    <p class="sub">Blade Template Laravel</p>
+    <img class="logo" src="TA_files/logo.png" alt="Logo Telkom University">
+    <p class="label">Disusun Oleh:</p>
+    <p class="nama">Akmallutfi Afza Gusty</p>
+    <p class="info">NIM: 707012500064</p>
+    <p class="info">Kelas: SIKC 49 - 04</p>
+
+    <div class="block">
+        <p class="label">Mata Kuliah:</p>
+        <p class="nama" style="font-size:13pt;">Pengembangan Aplikasi Berbasis Web</p>
+    </div>
+
+    <div class="block">
+        <p class="label">Dosen Pengampu:</p>
+        <p class="nama" style="font-size:13pt;">Diash Firdaus</p>
+    </div>
+
+    <div class="block">
+        <p class="info">Program Studi Sistem Informasi</p>
+        <p class="info">Fakultas Rekayasa Industri &mdash; Telkom University</p>
+        <p class="info">Tahun Akademik 2026/2027</p>
+    </div>
+</div>
+
+<hr>
+
+<!-- ================= 1. TUJUAN ================= -->
+<h2>1. Tujuan Praktikum</h2>
+<p>Melalui praktikum Modul 3 ini, saya ingin mencapai beberapa kemampuan berikut. Pertama,
+memahami konsep <i>Blade Template</i> sebagai <i>template engine</i> bawaan Laravel beserta cara
+kerja Laravel mengompilasi sebuah view menjadi kode PHP yang disimpan di cache. Kedua, mampu
+menuliskan sintaks dasar Blade, terutama <code>{{ }}</code> untuk menampilkan data. Ketiga,
+mampu memanfaatkan directive Blade untuk percabangan (<code>@if</code>, <code>@elseif</code>,
+<code>@else</code>) dan perulangan (<code>@foreach</code>, <code>@forelse</code>) agar tampilan
+dapat menyesuaikan data yang dikirim controller.</p>
+<p>Keempat, mampu membangun tampilan web yang seragam dan mudah dirawat dengan fitur
+<i>layouting</i> <code>@extends</code>, <code>@section</code>, dan <code>@yield</code>. Kelima,
+mampu membuat dan memakai kembali potongan tampilan melalui komponen Blade (<code>&lt;x-...&gt;</code>)
+dan partial (<code>@include</code>). Terakhir, saya ingin menerapkan seluruh konsep tersebut pada
+dua studi kasus, yaitu aplikasi pelaporan banjir <b>&ldquo;LaporBanjir&rdquo;</b> milik BPBD
+Kabupaten Bandung serta perubahan tampilan Tugas Akhir saya menjadi Blade View.</p>
+
+<!-- ================= 2. ALAT DAN BAHAN ================= -->
+<h2>2. Alat dan Bahan</h2>
+<p>Praktikum ini dikerjakan dengan perangkat dan perkakas berikut.</p>
+<p><b>Perangkat Keras:</b></p>
+<ul>
+    <li>Laptop dengan prosesor Intel Core i5, RAM 8 GB, dan penyimpanan SSD 512 GB.</li>
+    <li>Sistem operasi Windows 11 (64-bit).</li>
+</ul>
+<p><b>Perangkat Lunak:</b></p>
+<table class="table-basic">
+    <tr><th style="width:34%;">Perangkat Lunak</th><th>Versi / Keterangan</th></tr>
+    <tr><td>Laragon</td><td>Server lokal Apache &amp; MySQL (full)</td></tr>
+    <tr><td>PHP</td><td>8.5.10 (NTS, Win32-vs17-x64)</td></tr>
+    <tr><td>Composer</td><td>2.10.3 (dependency manager PHP)</td></tr>
+    <tr><td>Laravel Framework</td><td>13.17</td></tr>
+    <tr><td>Visual Studio Code</td><td>Teks editor / IDE</td></tr>
+    <tr><td>Google Chrome</td><td>Browser pengujian</td></tr>
+    <tr><td>Git</td><td>Kontrol versi</td></tr>
+</table>
+
+<!-- ================= 3. LANGKAH-LANGKAH ================= -->
+<h2>3. Langkah-Langkah Praktikum</h2>
+<p>Pengerjaan tugas praktikum dibagi menjadi dua bagian sesuai ketentuan Modul 3. Bagian pertama
+adalah pembuatan aplikasi <b>LaporBanjir</b> dengan tiga halaman (form, konfirmasi, dan daftar
+laporan). Bagian kedua adalah penerapan Blade Template pada Tugas Akhir. Kedua bagian memakai
+pola MVC (Model&ndash;View&ndash;Controller), tetapi karena masih berupa prototipe, data tidak
+diambil dari database melainkan ditulis dalam bentuk array di dalam controller.</p>
+
+<h3>3.1 Persiapan Proyek dan Struktur Folder</h3>
+<p>Aplikasi dibuat di dalam proyek Laravel yang telah disiapkan. Struktur view yang dibangun
+mengikuti pola pemisahan layout, halaman, komponen, dan partial seperti diperlihatkan pada
+potongan struktur berikut.</p>
+<pre class="code">resources/views/
+├── layouts/
+│   ├── app.blade.php          // layout utama LaporBanjir
+│   └── ta.blade.php           // layout utama Tugas Akhir
+├── components/
+│   └── alert.blade.php        // komponen pesan &lt;x-alert&gt;
+├── partials/
+│   ├── laporan-card.blade.php // partial kartu laporan banjir
+│   └── ta-row.blade.php       // partial baris tabel laporan warga
+├── laporan/
+│   ├── create.blade.php       // halaman form pelaporan
+│   ├── konfirmasi.blade.php   // halaman konfirmasi
+│   └── index.blade.php        // halaman daftar laporan
+└── ta/
+    ├── form.blade.php         // form laporan warga (Tugas Akhir)
+    ├── tampil.blade.php       // hasil/konfirmasi laporan warga
+    └── dashboard.blade.php    // dashboard admin</pre>
+<p>Langkah awal adalah membuat controller dengan perintah artisan, kemudian membuat file-file
+view secara manual di dalam folder <code>resources/views</code>.</p>
+<pre class="code">php artisan make:controller LaporanBanjirController
+php artisan make:controller DesaKitaController</pre>
+
+<h3>3.2 Konfigurasi Route</h3>
+<p>Route menghubungkan alamat URL dengan method pada controller. Setiap halaman diberi
+<i>named route</i> agar dapat dipanggil dari Blade dengan helper <code>route()</code>
+sehingga tautan navigasi tidak ditulis manual. Isi <code>routes/web.php</code>:</p>
+<pre class="code">&lt;?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LaporanBanjirController;
+use App\Http\Controllers\DesaKitaController;
+
+// Halaman awal diarahkan ke form pelaporan LaporBanjir.
+Route::get('/', [LaporanBanjirController::class, 'create'])-&gt;name('home');
+
+// 1. Aplikasi LaporBanjir
+Route::get('/laporan', [LaporanBanjirController::class, 'create'])-&gt;name('laporan.create');
+Route::post('/laporan', [LaporanBanjirController::class, 'store'])-&gt;name('laporan.store');
+Route::get('/laporan/konfirmasi', [LaporanBanjirController::class, 'konfirmasi'])-&gt;name('laporan.konfirmasi');
+Route::get('/laporan/daftar', [LaporanBanjirController::class, 'index'])-&gt;name('laporan.index');
+
+// 2. Tugas Akhir yang telah menjadi Blade View
+Route::get('/ta', [DesaKitaController::class, 'form'])-&gt;name('ta.form');
+Route::post('/ta', [DesaKitaController::class, 'tampil'])-&gt;name('ta.store');
+Route::get('/ta/hasil', [DesaKitaController::class, 'hasil'])-&gt;name('ta.hasil');
+Route::get('/ta/dashboard', [DesaKitaController::class, 'dashboard'])-&gt;name('ta.dashboard');</pre>
+<p>Halaman form dikirim melalui method <code>POST</code> ke <code>laporan.store</code>, sedangkan
+halaman konfirmasi dan daftar laporan diakses melalui method <code>GET</code>. Dengan demikian
+seluruh halaman dapat diakses melalui route masing-masing.</p>
+
+<h3>3.3 Pembuatan Controller</h3>
+<p>Controller berperan menyiapkan data dan mengolah <i>request</i>. Pada <code>LaporanBanjirController</code>
+terdapat method <code>dataLaporan()</code> yang menyimpan contoh data laporan dalam bentuk array,
+method <code>create()</code> untuk menampilkan form, <code>store()</code> untuk memvalidasi dan
+memproses data POST, <code>konfirmasi()</code> untuk menampilkan kembali data yang dikirim, serta
+<code>index()</code> untuk daftar laporan. Potongan method <code>store()</code>:</p>
+<pre class="code">public function store(Request $request)
+{
+    $validated = $request-&gt;validate([
+        'nama'   =&gt; 'required|string|max:100',
+        'lokasi' =&gt; 'required|string|max:150',
+        'tinggi' =&gt; 'required|numeric|min:0|max:1000',
+    ]);
+
+    // Simpan sementara di session, lalu arahkan ke halaman konfirmasi.
+    return redirect()
+        -&gt;route('laporan.konfirmasi')
+        -&gt;with('laporan', [
+            'nama'   =&gt; $validated['nama'],
+            'lokasi' =&gt; $validated['lokasi'],
+            'tinggi' =&gt; (float) $validated['tinggi'],
+        ]);
+}</pre>
+<p>Fungsi <code>compact()</code> dan <code>with()</code> memastikan data dikirim dari controller ke
+view, sehingga tidak ada logika PHP di dalam file tampilan.</p>
+
+<h3>3.4 Layout Utama (Layouting dengan @extends, @section, @yield)</h3>
+<p>Layout utama <code>layouts/app.blade.php</code> menyimpan bagian yang sama di setiap halaman,
+yaitu header berisi nama sistem, menu navigasi memakai <i>named route</i>, footer, dan CSS. Bagian
+yang berubah ditandai dengan <code>@yield</code>. Potongan penting layout:</p>
+<pre class="code">&lt;title&gt;@yield('title', 'Beranda') | LaporBanjir&lt;/title&gt;
+...
+&lt;nav class="main"&gt;
+    &lt;a href="{{ route('laporan.create') }}"&gt;Form Pelaporan&lt;/a&gt;
+    &lt;a href="{{ route('laporan.index') }}"&gt;Daftar Laporan&lt;/a&gt;
+&lt;/nav&gt;
+...
+&lt;main&gt;
+    @yield('content')
+&lt;/main&gt;
+&lt;footer&gt;&amp;copy; {{ date('Y') }} LaporBanjir&lt;/footer&gt;</pre>
+<p>Setiap halaman kemudian mewarisi layout ini menggunakan <code>@extends('layouts.app')</code>,
+mengisi judul dengan <code>@section('title', ...)</code>, dan mengisi konten dengan
+<code>@section('content') ... @endsection</code>.</p>
+
+<h3>3.5 Halaman Form Pelaporan</h3>
+<p>Halaman form <code>laporan/create.blade.php</code> berisi input nama pelapor, lokasi kejadian,
+dan tinggi genangan air. Form dikirim dengan method POST dan menyertakan token
+<code>@csrf</code>.</p>
+<pre class="code">@extends('layouts.app')
+
+@section('title', 'Form Pelaporan')
+
+@section('content')
+    &lt;h2 class="page-title"&gt;Form Pelaporan Banjir&lt;/h2&gt;
+    &lt;form action="{{ route('laporan.store') }}" method="POST"&gt;
+        @csrf
+        &lt;label for="nama"&gt;Nama Pelapor&lt;/label&gt;
+        &lt;input type="text" id="nama" name="nama" value="{{ old('nama') }}" required&gt;
+
+        &lt;label for="lokasi"&gt;Lokasi Kejadian&lt;/label&gt;
+        &lt;input type="text" id="lokasi" name="lokasi" value="{{ old('lokasi') }}" required&gt;
+
+        &lt;label for="tinggi"&gt;Tinggi Genangan Air (cm)&lt;/label&gt;
+        &lt;input type="number" id="tinggi" name="tinggi" min="0" step="1" value="{{ old('tinggi') }}" required&gt;
+
+        &lt;button type="submit" class="btn"&gt;Kirim Laporan&lt;/button&gt;
+    &lt;/form&gt;
+@endsection</pre>
+
+<h3>3.6 Komponen Blade Alert</h3>
+<p>Komponen <code>components/alert.blade.php</code> dibuat sekali dan dapat dipakai berulang dengan
+atribut berbeda. Warna border ditentukan memakai operator ternary berdasarkan nilai
+<code>$type</code>.</p>
+<pre class="code">@props(['type' =&gt; 'success', 'message' =&gt; ''])
+
+@php
+    $warna = match ($type) {
+        'error'   =&gt; ['garis' =&gt; '#c62828', 'latar' =&gt; '#fdecea', 'teks' =&gt; '#c62828'],
+        'warning' =&gt; ['garis' =&gt; '#ef6c00', 'latar' =&gt; '#fff4e5', 'teks' =&gt; '#ef6c00'],
+        default   =&gt; ['garis' =&gt; '#2e7d32', 'latar' =&gt; '#e8f5e9', 'teks' =&gt; '#2e7d32'],
+    };
+@endphp
+
+&lt;div style="padding:14px 16px;border-radius:10px;border:1px solid {{ $warna['garis'] }};background:{{ $warna['latar'] }};color:{{ $warna['teks'] }};"&gt;
+    &lt;strong&gt;{{ ucfirst($type) }}:&lt;/strong&gt; {{ $message }}
+&lt;/div&gt;</pre>
+<p>Komponen ini dipanggil pada halaman konfirmasi dengan
+<code>&lt;x-alert type="success" message="..." /&gt;</code>.</p>
+
+<h3>3.7 Halaman Konfirmasi</h3>
+<p>Halaman konfirmasi menampilkan pesan berhasil memakai komponen <code>&lt;x-alert&gt;</code> dan
+mengulang kembali data yang telah dikirim. Status genangan ditentukan dengan directive
+<code>@if/@elseif/@else</code>: kurang dari 30 cm <b>Waspada</b>, 30&ndash;70 cm <b>Siaga</b>,
+dan lebih dari 70 cm <b>Awas</b>.</p>
+<pre class="code">@extends('layouts.app')
+
+@section('title', 'Konfirmasi Laporan')
+
+@section('content')
+    &lt;h2 class="page-title"&gt;Konfirmasi Laporan&lt;/h2&gt;
+
+    &lt;x-alert type="success" message="Laporan banjir Anda berhasil dikirim." /&gt;
+
+    &lt;dl class="data-list"&gt;
+        &lt;dt&gt;Nama Pelapor&lt;/dt&gt;&lt;dd&gt;{{ $laporan['nama'] }}&lt;/dd&gt;
+        &lt;dt&gt;Lokasi Kejadian&lt;/dt&gt;&lt;dd&gt;{{ $laporan['lokasi'] }}&lt;/dd&gt;
+        &lt;dt&gt;Tinggi Genangan Air&lt;/dt&gt;&lt;dd&gt;{{ $laporan['tinggi'] }} cm&lt;/dd&gt;
+        &lt;dt&gt;Status Genangan&lt;/dt&gt;
+        &lt;dd&gt;
+            @if($laporan['tinggi'] &lt; 30)
+                &lt;span class="badge waspada"&gt;Waspada&lt;/span&gt;
+            @elseif($laporan['tinggi'] &lt;= 70)
+                &lt;span class="badge siaga"&gt;Siaga&lt;/span&gt;
+            @else
+                &lt;span class="badge awas"&gt;Awas&lt;/span&gt;
+            @endif
+        &lt;/dd&gt;
+    &lt;/dl&gt;
+@endsection</pre>
+
+<h3>3.8 Partial dan Halaman Daftar Laporan</h3>
+<p>Satu kartu laporan dipisahkan ke dalam partial
+<code>partials/laporan-card.blade.php</code>. Partial ini hanya berfokus menampilkan satu laporan
+yang variabelnya dikirim melalui <code>@include</code>.</p>
+<pre class="code">&lt;div class="card"&gt;
+    &lt;h3&gt;{{ $laporan['lokasi'] }}&lt;/h3&gt;
+    &lt;p&gt;Pelapor: {{ $laporan['nama'] }}&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;Tinggi Genangan:&lt;/strong&gt; {{ $laporan['tinggi'] }} cm&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;Status Genangan:&lt;/strong&gt;
+        @if($laporan['tinggi'] &lt; 30)
+            &lt;span class="badge waspada"&gt;Waspada&lt;/span&gt;
+        @elseif($laporan['tinggi'] &lt;= 70)
+            &lt;span class="badge siaga"&gt;Siaga&lt;/span&gt;
+        @else
+            &lt;span class="badge awas"&gt;Awas&lt;/span&gt;
+        @endif
+    &lt;/p&gt;
+&lt;/div&gt;</pre>
+<p>Halaman daftar laporan <code>laporan/index.blade.php</code> menampilkan seluruh laporan dengan
+directive perulangan <code>@forelse</code> dan memanggil partial di atas.</p>
+<pre class="code">@extends('layouts.app')
+
+@section('title', 'Daftar Laporan')
+
+@section('content')
+    &lt;h2 class="page-title"&gt;Daftar Laporan Banjir&lt;/h2&gt;
+
+    &lt;div class="grid"&gt;
+        @forelse($laporans as $laporan)
+            @include('partials.laporan-card', ['laporan' =&gt; $laporan])
+        @empty
+            &lt;p class="empty"&gt;Belum ada laporan banjir yang masuk.&lt;/p&gt;
+        @endforelse
+    &lt;/div&gt;
+@endsection</pre>
+
+<h3>3.9 Penerapan Blade pada Tugas Akhir</h3>
+<p>Pada bagian kedua, tampilan Tugas Akhir diubah menjadi Blade View. Sama seperti LaporBanjir,
+Tugas Akhir memakai satu layout utama <code>layouts/ta.blade.php</code> yang berisi header, menu
+navigasi bernama, footer, dan CSS (efek <i>glassmorphism</i>). Tampilan sebelum diubah berupa file
+HTML dan PHP statis; setelah diubah setiap halaman cukup mewarisi layout.</p>
+<pre class="code">// layouts/ta.blade.php (potongan)
+&lt;title&gt;@yield('title', 'DesaKita') | Laporan Warga&lt;/title&gt;
+&lt;nav class="ta-nav"&gt;
+    &lt;a href="{{ route('ta.form') }}"&gt;Input Laporan&lt;/a&gt;
+    &lt;a href="{{ route('ta.dashboard') }}"&gt;Dashboard&lt;/a&gt;
+&lt;/nav&gt;
+&lt;main class="ta-wrap"&gt;@yield('content')&lt;/main&gt;
+&lt;footer&gt;&amp;copy; {{ date('Y') }} DesaKita&lt;/footer&gt;</pre>
+<p>Controller <code>DesaKitaController</code> menyiapkan data laporan warga dan mengirimkannya ke
+view. Directive perulangan <code>@forelse</code> dipakai pada halaman dashboard, sedangkan
+directive percabangan <code>@if</code> dipakai untuk menentukan label status pada partial
+<code>partials/ta-row.blade.php</code>.</p>
+<pre class="code">// ta/dashboard.blade.php (potongan)
+@forelse($dataWarga as $item)
+    @include('partials.ta-row', ['row' =&gt; $item, 'no' =&gt; $loop-&gt;iteration])
+@empty
+    &lt;tr&gt;&lt;td colspan="5"&gt;Belum ada data laporan.&lt;/td&gt;&lt;/tr&gt;
+@endforelse
+
+// partials/ta-row.blade.php (potongan)
+&lt;td class="text-center"&gt;
+    @if(($row['tinggi'] ?? 0) &gt; 1)
+        &lt;span class="ta-badge proses"&gt;Siaga&lt;/span&gt;
+    @else
+        &lt;span class="ta-badge diterima"&gt;Diterima&lt;/span&gt;
+    @endif
+&lt;/td&gt;</pre>
+
+<h3>3.10 Menjalankan dan Menguji Aplikasi</h3>
+<p>Aplikasi dijalankan dengan perintah artisan serve, kemudian setiap halaman diuji melalui
+browser pada alamat <code>127.0.0.1:8000</code>. Pengujian meliputi pengisian form dan pengiriman
+data untuk memastikan halaman konfirmasi menampilkan kembali data dengan benar.</p>
+<pre class="code">php artisan serve
+# kemudian buka:
+# http://127.0.0.1:8000/laporan
+# http://127.0.0.1:8000/laporan/daftar
+# http://127.0.0.1:8000/ta
+# http://127.0.0.1:8000/ta/dashboard</pre>
+
+<!-- ================= 4. HASIL DAN DOKUMENTASI ================= -->
+<h2>4. Hasil dan Dokumentasi Program</h2>
+<p>Berikut adalah tangkapan layar hasil aplikasi yang telah dijalankan dan diuji melalui browser.
+Setiap gambar diberi nomor, keterangan, dan penjelasan singkat.</p>
+
+<figure>
+    <img src="TA_files/fig1.png" width="640" alt="Halaman form pelaporan">
+</figure>
+<p class="caption-title">Gambar 4.1 Halaman Form Pelaporan LaporBanjir</p>
+<p>Gambar 4.1 menampilkan halaman form pelaporan yang mewarisi <code>layouts/app.blade.php</code>.
+Tampak header bernama sistem, menu navigasi, tiga input (nama pelapor, lokasi kejadian, dan tinggi
+genangan air), tombol kirim, serta footer. Form mengirim data melalui method POST ke named route
+<code>laporan.store</code>.</p>
+
+<figure>
+    <img src="TA_files/fig2.png" width="640" alt="Halaman konfirmasi dengan komponen alert">
+</figure>
+<p class="caption-title">Gambar 4.2 Halaman Konfirmasi dan Komponen Alert</p>
+<p>Gambar 4.2 memperlihatkan halaman konfirmasi setelah form dikirim. Pesan keberhasilan
+ditampilkan menggunakan komponen Blade <code>&lt;x-alert type="success" ... /&gt;</code>. Data yang
+dikirim (nama, lokasi, tinggi 85 cm) ditampilkan kembali, dan status genangan dihitung dengan
+<code>@if/@elseif/@else</code> sehingga muncul label <b>Awas</b> karena tinggi melebihi 70 cm.</p>
+
+<figure>
+    <img src="TA_files/fig3.png" width="640" alt="Halaman daftar laporan">
+</figure>
+<p class="caption-title">Gambar 4.3 Halaman Daftar Laporan dengan Status Genangan</p>
+<p>Gambar 4.3 menampilkan daftar laporan hasil perulangan <code>@forelse</code> yang memanggil partial
+<code>partials.laporan-card</code>. Terlihat tiga kategori status: <b>Waspada</b> (25 cm, hijau),
+<b>Siaga</b> (45&ndash;60 cm, oranye), dan <b>Awas</b> (85&ndash;120 cm, merah). Hal ini membuktikan
+directive percabangan bekerja sesuai ketentuan modul.</p>
+
+<figure>
+    <img src="TA_files/fig4.png" width="640" alt="Halaman form Tugas Akhir">
+</figure>
+<p class="caption-title">Gambar 4.4 Halaman Form Laporan Warga (Tugas Akhir)</p>
+<p>Gambar 4.4 adalah halaman Tugas Akhir yang telah diubah menjadi Blade View. Berbeda dari
+sebelumnya yang berupa HTML statis, kini halaman mewarisi <code>layouts/ta.blade.php</code> dan
+memakai header, menu navigasi, serta footer yang seragam.</p>
+
+<figure>
+    <img src="TA_files/fig5.png" width="640" alt="Halaman hasil laporan warga">
+</figure>
+<p class="caption-title">Gambar 4.5 Halaman Hasil Laporan Warga</p>
+<p>Gambar 4.5 menunjukkan halaman hasil setelah laporan warga dikirim. Komponen
+<code>&lt;x-alert&gt;</code> kembali dipakai untuk pesan sukses, dan baris tabel ditampilkan melalui
+partial <code>partials.ta-row.blade.php</code>.</p>
+
+<figure>
+    <img src="TA_files/fig6.png" width="640" alt="Dashboard admin Tugas Akhir">
+</figure>
+<p class="caption-title">Gambar 4.6 Dashboard Admin Tugas Akhir</p>
+<p>Gambar 4.6 menampilkan dashboard admin yang menampilkan seluruh data laporan warga dengan
+perulangan <code>@forelse</code>. Status setiap baris ditentukan oleh directive <code>@if</code>
+pada partial sehingga muncul label <b>Diterima</b> atau <b>Siaga</b>.</p>
+
+<!-- ================= 5. ANALISIS ================= -->
+<h2>5. Analisis dan Pembahasan</h2>
+<p><b>Pembagian layout, komponen, dan partial.</b> Layout <code>layouts/app.blade.php</code> dibuat
+untuk menampung bagian yang sifatnya statis dan berulang di setiap halaman, yaitu header, menu
+navigasi, footer, dan CSS. Dengan cara ini, ketika warna atau menu ingin diubah, saya cukup
+mengubah satu file dan seluruh halaman yang mewarisinya ikut berubah. Komponen
+<code>&lt;x-alert&gt;</code> dipakai untuk elemen antarmuka kecil yang muncul di banyak tempat
+(pesan sukses pada halaman konfirmasi LaporBanjir maupun Tugas Akhir) karena komponen menerima
+atribut sehingga lebih fleksibel. Sementara itu, partial
+<code>partials/laporan-card.blade.php</code> dan <code>partials/ta-row.blade.php</code> dipakai
+untuk memecah bagian tampilan yang besar (kartu dan baris tabel) agar view utama lebih ringkas dan
+mudah dibaca. Pembagian ini sesuai panduan modul: gunakan komponen untuk elemen UI kecil yang
+menerima atribut, dan partial untuk memecah halaman yang panjang.</p>
+<p><b>Perbedaan sebelum dan sesudah memakai Blade.</b> Sebelumnya, tampilan Tugas Akhir berupa file
+HTML tersendiri yang menuliskan ulang bagian <code>&lt;head&gt;</code>, CSS, dan struktur halaman
+di setiap file, serta mencampur logika PHP langsung di dalam tampilan. Setelah memakai Blade,
+setiap halaman cukup menulis <code>@extends</code> dan <code>@section</code>, data ditampilkan
+dengan <code>{{ }}</code> yang otomatis melakukan <i>escape</i> sehingga lebih aman, dan logika
+percabangan serta perulangan ditulis dengan directive yang lebih ringkas. Kode pun menjadi lebih
+konsisten dan mudah dirawat.</p>
+<p><b>Kendala dan cara penyelesaiannya.</b> Selama praktikum ada beberapa kendala yang saya
+temukan. Pertama, saat pertama kali data hasil submit tidak terbaca di halaman konfirmasi karena
+data hanya dikirim lewat <code>redirect()</code> tanpa disimpan. Masalah ini diselesaikan dengan
+menggunakan <code>-&gt;with('laporan', ...)</code> sehingga data disimpan sementara di session.
+Kedua, halaman konfirmasi sempat menampilkan nilai kosong ketika diakses langsung tanpa mengirim
+form; hal ini diatasi dengan pengecekan di controller dan mengarahkan kembali ke form apabila data
+session tidak ditemukan. Ketiga, pada halaman Tugas Akhir label <i>floating</i> input tidak naik
+ketika field kosong karena atribut <code>placeholder</code> tidak diisi spasi; solusinya adalah
+menuliskan <code>placeholder=" "</code> dan memastikan file CSS serta JavaScript tetap dimuat
+melalui helper <code>asset()</code>. Terakhir, saya memastikan setiap directive ditutup dengan
+benar (<code>@if</code> dengan <code>@endif</code>, <code>@forelse</code> dengan
+<code>@endforelse</code>) agar tidak terjadi galat sintaks saat Blade dikompilasi.</p>
+<p><b>Kesesuaian dengan ketentuan tugas.</b> Aplikasi LaporBanjir telah memenuhi ketentuan pada
+bagian 3.5: layout utama <code>layouts/app.blade.php</code> berisi header, menu bernama, footer,
+dan CSS (poin a); daftar laporan memakai <code>@forelse</code> dan status ditentukan dengan
+<code>@if/@elseif/@else</code> (poin b); halaman konfirmasi memakai komponen
+<code>&lt;x-alert&gt;</code> (poin c); kartu laporan ditampilkan melalui partial dengan
+<code>@include</code> (poin d); dan setiap halaman dapat diakses melalui route (poin e). Tugas Akhir
+juga telah memenuhi ketentuan: layout utama dengan <code>@extends</code>, directive
+<code>@if</code> dan <code>@forelse</code>, komponen/partial, serta named route pada navigasi.</p>
+
+<!-- ================= 6. KESIMPULAN ================= -->
+<h2>6. Kesimpulan</h2>
+<p>Praktikum Modul 3 berhasil dilaksanakan. Saya dapat menyimpulkan bahwa Blade Template sangat
+membantu dalam menyusun tampilan Laravel secara terstruktur. Fitur layouting
+(<code>@extends</code>, <code>@section</code>, <code>@yield</code>) membuat bagian tampilan yang
+sama cukup ditulis sekali sehingga setiap halaman terlihat seragam dan mudah dikembangkan.
+Directive percabangan (<code>@if/@elseif/@else</code>) dan perulangan
+(<code>@foreach/@forelse</code>) memudahkan penyajian data dinamis yang dikirim dari controller,
+seperti status genangan pada aplikasi LaporBanjir. Penggunaan komponen
+(<code>&lt;x-alert&gt;</code>) dan partial (<code>@include</code>) juga terbukti membuat kode tidak
+ditulis berulang-ulang serta lebih mudah dirawat. Pada akhirnya, seluruh tampilan Tugas Akhir saya
+berhasil diubah menjadi Blade View dan dapat dijalankan dengan baik di browser.</p>
+
+<!-- ================= 7. LAMPIRAN ================= -->
+<h2>7. Lampiran</h2>
+<h3>7.1 Link Repositori GitHub</h3>
+<p>Kode program lengkap dapat diakses melalui tautan repositori GitHub berikut:</p>
+<p><a href="https://github.com/USERNAME/TA-Modul3-Blade-Template">https://github.com/USERNAME/TA-Modul3-Blade-Template</a>
+<i>(silakan ganti USERNAME dengan akun GitHub masing-masing sebelum dikumpulkan)</i></p>
+<p>Seluruh kode sumber juga tersimpan pada folder proyek Laravel dengan struktur yang telah
+dijelaskan pada bagian 3.1, meliputi file controller, route, layout, komponen, partial, dan view.</p>
+
+<h3>7.2 Presentasi Hasil Praktikum</h3>
+<p>Hasil praktikum akan dipresentasikan di kelas berupa demonstrasi aplikasi yang berjalan
+(halaman form, konfirmasi, daftar laporan, serta halaman Tugas Akhir) disertai penjelasan kode
+program dan sesi tanya jawab dengan dosen pengampu.</p>
+
+</body>
+</html>
